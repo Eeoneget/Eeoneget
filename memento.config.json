@@ -1,7 +1,9 @@
 {
   "title": "DEADLINE",
-  "target": "2026-10-01",
-  "start": "2026-08-23",
+  "target": "2026-09-03",
+  "start": "2026-08-21",
   "tzOffsetHours": 3,
+  "hero": "assets/hero.png",
+  "heroHeight": 600,
   "width": 600
 }

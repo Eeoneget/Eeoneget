@@ -1,14 +1,23 @@
 #!/usr/bin/env node
-// Generates assets/memento.svg — an ink-wash "memento mori" day grid counting
-// down to the deadline in memento.config.json, styled to sit flush under the
-// artwork in readme.md. Run daily from .github/workflows/memento.yml.
+// Generates assets/profile.svg — the hero artwork with an ink-wash "memento
+// mori" day grid counting down to the deadline in memento.config.json.
+//
+// Hero and countdown live in ONE file on purpose: GitHub's markdown sanitizer
+// strips `style`, so two stacked <img> tags always leave an inline line-box gap
+// between them. Welding them into a single SVG is the only way to get a seam of
+// exactly zero. Run daily from .github/workflows/memento.yml.
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
-import { dirname, resolve, join } from 'node:path';
+import { dirname, resolve, join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const cfg = JSON.parse(readFileSync(join(root, 'memento.config.json'), 'utf8'));
+
+const MIME = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif' };
+const heroPath = cfg.hero || 'assets/hero.png';
+const heroData = readFileSync(join(root, heroPath)).toString('base64');
+const heroMime = MIME[extname(heroPath).toLowerCase()] || 'image/png';
 
 const DAY = 86400000;
 const TZ = (cfg.tzOffsetHours ?? 0) * 3600000;
@@ -56,8 +65,21 @@ const pitch = innerW / cols;
 const cell = Math.max(4, pitch * 0.7);
 const gridH = (rows - 1) * pitch + cell;
 
-const TOP_BAND = 48;
-const headY = TOP_BAND + 34;
+// The countdown doesn't sit under the artwork, it continues it: the hero's last
+// EDGE rendered pixels are mirrored, stretched STRETCH times to fill FOG, and
+// dissolved into paper. Mirroring rather than offsetting matters — it puts the
+// hero's own bottom row at the seam, so the two halves match per column by
+// construction. Offsetting by EDGE instead left tonal steps up to 47/255 wide
+// wherever a dark stroke ended inside the lookback window.
+const FOG = 104;
+const EDGE = 8;
+const STRETCH = FOG / EDGE;
+// The mirror is lifted LIFT px above the seam and clipped back off, purely so
+// the displacement filter has real ink to pull down at y=0 instead of the
+// transparency that lies beyond the image edge. Costs ~2px of lookback.
+const LIFT = 24;
+
+const headY = FOG + 34;
 const ruleY = headY + 12;
 const gridY = ruleY + 22;
 const numY = gridY + gridH + 78;
@@ -65,6 +87,12 @@ const footRuleY = numY + 24;
 const footY = footRuleY + 17;
 const BOTTOM_BAND = 48;
 const H = Math.round(footY + 12 + BOTTOM_BAND);
+
+// Rendered height of the hero. Defaults to the 600x600 box readme.md used
+// before the two images were welded together, so the weld doesn't silently
+// restretch the artwork.
+const heroH = cfg.heroHeight || 600;
+const TOTAL = heroH + H;
 
 // A ridge hanging off `closeY`: a wavy silhouette echoing the ink hills in the
 // artwork above. Rendered through the brush filter so the edge tears.
@@ -99,11 +127,6 @@ function hairline(rnd, y, x1 = PAD, x2 = W - PAD) {
 // ── artwork ─────────────────────────────────────────────────────────────────
 const rnd = mulberry32(20260823);
 
-const topWash = [
-  { d: ridge(rnd, { baseY: 54, amp: 21, segs: 5, closeY: 0 }), fill: '#c4c4c4', o: 0.55 },
-  { d: ridge(rnd, { baseY: 40, amp: 17, segs: 6, closeY: 0 }), fill: '#7f7f7f', o: 0.65 },
-  { d: ridge(rnd, { baseY: 25, amp: 13, segs: 8, closeY: 0 }), fill: '#141414', o: 0.92 },
-];
 const botWash = [
   { d: ridge(rnd, { baseY: H - 54, amp: 21, segs: 5, closeY: H }), fill: '#c4c4c4', o: 0.55 },
   { d: ridge(rnd, { baseY: H - 40, amp: 17, segs: 6, closeY: H }), fill: '#7f7f7f', o: 0.65 },
@@ -124,7 +147,7 @@ for (let i = 0; i < total; i++) {
 
   if (i < elapsed) {
     marks.push(
-      `<rect x="${n(x)}" y="${n(y)}" width="${n(s)}" height="${n(s)}" fill="#0b0b0b" opacity="${n(0.82 + rnd() * 0.18, 2)}"/>`
+      `<rect x="${n(x)}" y="${n(y)}" width="${n(s)}" height="${n(s)}" fill="#0b0b0b" opacity="${n(0.9 + rnd() * 0.1, 2)}"/>`
     );
   } else {
     marks.push(
@@ -157,7 +180,7 @@ const esc = (s) => String(s).replace(/[<>&"]/g, (c) => ({ '<': '&lt;', '>': '&gt
 const SERIF = "Georgia,'Iowan Old Style','Times New Roman',serif";
 const MONO = "'DejaVu Sans Mono',Menlo,Consolas,'Courier New',monospace";
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(motto)}: ${esc(bigNum)} ${esc(bigLabel.toLowerCase())} until ${esc(cfg.title)} on ${esc(cfg.target)}">
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${TOTAL}" viewBox="0 0 ${W} ${TOTAL}" role="img" aria-label="${esc(motto)}: ${esc(bigNum)} ${esc(bigLabel.toLowerCase())} until ${esc(cfg.title)} on ${esc(cfg.target)}">
 <title>${esc(motto)} — ${esc(bigNum)} ${esc(bigLabel.toLowerCase())} until ${esc(cfg.title)} (${esc(cfg.target)})</title>
 <defs>
 <filter id="rough" x="-6%" y="-20%" width="112%" height="140%">
@@ -168,16 +191,25 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
 <feTurbulence type="fractalNoise" baseFrequency="0.022 0.05" numOctaves="4" seed="21" result="n"/>
 <feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G"/>
 </filter>
+<filter id="fog" x="-4%" y="-15%" width="108%" height="130%">
+<feTurbulence type="fractalNoise" baseFrequency="0.012 0.055" numOctaves="4" seed="13" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="20" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
 <filter id="grain" x="0" y="0" width="100%" height="100%">
 <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="5"/>
 <feColorMatrix type="saturate" values="0"/>
 <feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
 </filter>
-<linearGradient id="fadeDown" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0" stop-color="#fff" stop-opacity="0"/>
-<stop offset="0.5" stop-color="#fff" stop-opacity="0.28"/>
-<stop offset="1" stop-color="#fff" stop-opacity="1"/>
+<linearGradient id="dissolveGrad" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#fff" stop-opacity="1"/>
+<stop offset="0.22" stop-color="#fff" stop-opacity="0.9"/>
+<stop offset="0.58" stop-color="#fff" stop-opacity="0.34"/>
+<stop offset="1" stop-color="#fff" stop-opacity="0"/>
 </linearGradient>
+<mask id="dissolve"><rect x="0" y="0" width="${W}" height="${FOG}" fill="url(#dissolveGrad)"/></mask>
+<clipPath id="strip"><rect x="0" y="0" width="${W}" height="${FOG}"/></clipPath>
+<clipPath id="stripWide"><rect x="${-FOG}" y="${-FOG}" width="${W + FOG * 2}" height="${FOG * 3}"/></clipPath>
+<image id="hero" x="0" y="0" width="${W}" height="${heroH}" preserveAspectRatio="none" href="data:${heroMime};base64,${heroData}"/>
 <linearGradient id="fadeUp" x1="0" y1="1" x2="0" y2="0">
 <stop offset="0" stop-color="#fff" stop-opacity="0"/>
 <stop offset="0.5" stop-color="#fff" stop-opacity="0.28"/>
@@ -186,14 +218,23 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
 <clipPath id="frame"><rect x="0" y="0" width="${W}" height="${H}"/></clipPath>
 </defs>
 
+<use href="#hero"/>
+
+<g transform="translate(0,${heroH})">
 <rect width="${W}" height="${H}" fill="#ffffff"/>
 
 <g clip-path="url(#frame)">
-  <g filter="url(#brush)">
-${topWash.map((p) => `    <path d="${p.d}" fill="${p.fill}" opacity="${p.o}"/>`).join('\n')}
+  <g mask="url(#dissolve)">
+    <g clip-path="url(#strip)">
+      <g filter="url(#fog)">
+        <g clip-path="url(#stripWide)">
+          <!-- 8% wider than the canvas so the displacement has ink to pull from
+               at the left and right edges instead of transparency. -->
+          <use href="#hero" transform="translate(${n(-W * 0.04)},${n(heroH * STRETCH - LIFT)}) scale(1.08,${n(-STRETCH, 3)})"/>
+        </g>
+      </g>
+    </g>
   </g>
-  <rect x="0" y="0" width="${W}" height="${TOP_BAND + 10}" fill="url(#fadeDown)"/>
-  <rect x="0" y="-4" width="${W}" height="18" fill="#0b0b0b"/>
 
   <g filter="url(#brush)">
 ${botWash.map((p) => `    <path d="${p.d}" fill="${p.fill}" opacity="${p.o}"/>`).join('\n')}
@@ -221,17 +262,18 @@ ${marks.map((m) => '    ' + m).join('\n')}
 </g>
 
 <rect width="${W}" height="${H}" filter="url(#grain)" opacity="0.16" style="mix-blend-mode:multiply"/>
+</g>
 </svg>
 `;
 
 mkdirSync(join(root, 'assets'), { recursive: true });
-writeFileSync(join(root, 'assets', 'memento.svg'), svg);
+writeFileSync(join(root, 'assets', 'profile.svg'), svg);
 
 // Bump the cache-buster in the README so GitHub's image proxy can't serve a
 // stale copy of the countdown.
 const readmePath = join(root, 'readme.md');
 const readme = readFileSync(readmePath, 'utf8');
-const bumped = readme.replace(/assets\/memento\.svg(\?v=[^"'\s>]*)?/g, `assets/memento.svg?v=${iso(today)}`);
+const bumped = readme.replace(/assets\/profile\.svg(\?v=[^"'\s>]*)?/g, `assets/profile.svg?v=${iso(today)}`);
 if (bumped !== readme) writeFileSync(readmePath, bumped);
 
-console.log(`memento: ${bigNum} ${bigLabel} · ${counter} · ${pct}% · ${W}x${H}`);
+console.log(`memento: ${bigNum} ${bigLabel} · ${counter} · ${pct}% · ${W}x${TOTAL} · ${Math.round(svg.length / 1024)}KB`);
