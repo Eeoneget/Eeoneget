@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="341" viewBox="0 0 600 341" role="img" aria-label="MEMENTO MORI: 39 days remain until DEADLINE on 2026-10-01">
+<title>MEMENTO MORI — 39 days remain until DEADLINE (2026-10-01)</title>
+<defs>
+<filter id="rough" x="-6%" y="-20%" width="112%" height="140%">
+<feTurbulence type="fractalNoise" baseFrequency="0.05 0.09" numOctaves="3" seed="7" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="brush" x="-5%" y="-40%" width="110%" height="180%">
+<feTurbulence type="fractalNoise" baseFrequency="0.022 0.05" numOctaves="4" seed="21" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="grain" x="0" y="0" width="100%" height="100%">
+<feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="5"/>
+<feColorMatrix type="saturate" values="0"/>
+<feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+</filter>
+<linearGradient id="fadeDown" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#fff" stop-opacity="0"/>
+<stop offset="0.5" stop-color="#fff" stop-opacity="0.28"/>
+<stop offset="1" stop-color="#fff" stop-opacity="1"/>
+</linearGradient>
+<linearGradient id="fadeUp" x1="0" y1="1" x2="0" y2="0">
+<stop offset="0" stop-color="#fff" stop-opacity="0"/>
+<stop offset="0.5" stop-color="#fff" stop-opacity="0.28"/>
+<stop offset="1" stop-color="#fff" stop-opacity="1"/>
+</linearGradient>
+<clipPath id="frame"><rect x="0" y="0" width="600" height="341"/></clipPath>
+</defs>
+
+<rect width="600" height="341" fill="#ffffff"/>
+
+<g clip-path="url(#frame)">
+  <g filter="url(#brush)">
+    <path d="M0,0 L0,46.3 Q0,46.3 60,40.3 Q120,34.3 180,44.1 Q240,53.8 300,52.9 Q360,51.9 420,44.6 Q480,37.3 540,43.9 L600,50.6 L600,0 Z" fill="#c4c4c4" opacity="0.55"/>
+    <path d="M0,0 L0,23.9 Q0,23.9 50,27.8 Q100,31.7 150,35.7 Q200,39.8 250,35.4 Q300,31.1 350,32.9 Q400,34.8 450,34.2 Q500,33.5 550,36.3 L600,39.2 L600,0 Z" fill="#7f7f7f" opacity="0.65"/>
+    <path d="M0,0 L0,20.5 Q0,20.5 37.5,17.8 Q75,15.1 112.5,20 Q150,25 187.5,22.3 Q225,19.7 262.5,18.8 Q300,17.9 337.5,20.1 Q375,22.3 412.5,23.4 Q450,24.5 487.5,19.9 Q525,15.4 562.5,18.3 L600,21.3 L600,0 Z" fill="#141414" opacity="0.92"/>
+  </g>
+  <rect x="0" y="0" width="600" height="58" fill="url(#fadeDown)"/>
+  <rect x="0" y="-4" width="600" height="18" fill="#0b0b0b"/>
+
+  <g filter="url(#brush)">
+    <path d="M0,341 L0,295 Q0,295 60,299.8 Q120,304.6 180,295.8 Q240,287 300,290.4 Q360,293.8 420,296.4 Q480,299.1 540,295.2 L600,291.2 L600,341 Z" fill="#c4c4c4" opacity="0.55"/>
+    <path d="M0,341 L0,311.6 Q0,311.6 50,307.8 Q100,304 150,302.7 Q200,301.4 250,301.4 Q300,301.4 350,305.3 Q400,309.1 450,310.4 Q500,311.8 550,307.6 L600,303.4 L600,341 Z" fill="#7f7f7f" opacity="0.65"/>
+    <path d="M0,341 L0,322.1 Q0,322.1 37.5,322.1 Q75,322.1 112.5,319.3 Q150,316.5 187.5,316.7 Q225,316.8 262.5,319.8 Q300,322.8 337.5,319.6 Q375,316.4 412.5,316.3 Q450,316.2 487.5,317.4 Q525,318.7 562.5,318.7 L600,318.7 L600,341 Z" fill="#141414" opacity="0.92"/>
+  </g>
+  <rect x="0" y="283" width="600" height="58" fill="url(#fadeUp)"/>
+  <rect x="0" y="327" width="600" height="18" fill="#0b0b0b"/>
+
+  <text x="30" y="82" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="15" letter-spacing="6.5" fill="#0b0b0b">MEMENTO MORI</text>
+  <text x="570" y="82" text-anchor="end" font-family="'DejaVu Sans Mono',Menlo,Consolas,'Courier New',monospace" font-size="10.5" letter-spacing="2.4" fill="#3c3c3c">DEADLINE</text>
+  <path d="M30,94.3 L68.6,93.3 L107.1,94.4 L145.7,93.8 L184.3,94.3 L222.9,94.6 L261.4,93.6 L300,94.4 L338.6,94.2 L377.1,93.6 L415.7,93.4 L454.3,94.1 L492.9,93.7 L531.4,94.2 L570,94.5" fill="none" stroke="#0b0b0b" stroke-width="1.1" filter="url(#rough)"/>
+
+  <g filter="url(#rough)">
+    <rect x="30.1" y="115.9" width="18.1" height="18.1" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <path d="M26.6,117.4 L26.6,112.4 L31.6,112.4 M46.7,112.4 L51.7,112.4 L51.7,117.4 M51.7,132.5 L51.7,137.5 L46.7,137.5 M31.6,137.5 L26.6,137.5 L26.6,132.5" fill="none" stroke="#0b0b0b" stroke-width="1.4"/>
+    <rect x="56.3" y="116.1" width="18.3" height="18.3" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="83.8" y="116" width="18.4" height="18.4" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="110.8" y="115.7" width="17.7" height="17.7" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="138" y="116.3" width="17" height="17" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="165.7" y="115.5" width="19.1" height="19.1" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="192.6" y="115.5" width="17.2" height="17.2" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="219.4" y="116.6" width="19.4" height="19.4" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="246.6" y="116.3" width="17.8" height="17.8" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="273" y="115.9" width="19.4" height="19.4" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="300.5" y="115.5" width="17.2" height="17.2" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="327.6" y="115.7" width="18.3" height="18.3" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="353.5" y="115.6" width="19.1" height="19.1" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="380.8" y="116.5" width="18.3" height="18.3" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="408.5" y="116.6" width="17.4" height="17.4" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="435.5" y="115.3" width="17.8" height="17.8" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="461.6" y="116.1" width="18.8" height="18.8" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="489" y="116.4" width="17.6" height="17.6" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="515.6" y="115.4" width="17.6" height="17.6" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="542.5" y="116.2" width="19.3" height="19.3" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="30.5" y="143.2" width="19.4" height="19.4" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="57.6" y="143.4" width="19" height="19" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="84" y="143.6" width="19.3" height="19.3" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="111.3" y="143.7" width="18.9" height="18.9" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="137.8" y="142.8" width="19.6" height="19.6" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="165.3" y="143.6" width="18.5" height="18.5" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="191.9" y="142.5" width="18.4" height="18.4" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="219" y="143.3" width="17.8" height="17.8" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="245.7" y="143.5" width="17.5" height="17.5" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="273.5" y="142.3" width="18.8" height="18.8" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="299.9" y="142.5" width="18" height="18" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="326.3" y="143.2" width="19" height="19" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="353.4" y="143.2" width="19.2" height="19.2" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="381.6" y="142.8" width="18.8" height="18.8" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="408.7" y="142.6" width="19.4" height="19.4" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="434.8" y="142.8" width="18.6" height="18.6" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="461.5" y="142.5" width="17.9" height="17.9" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="489.5" y="143.1" width="18.6" height="18.6" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+    <rect x="515.6" y="143.7" width="19.1" height="19.1" fill="none" stroke="#141414" stroke-width="1.3" opacity="0.55"/>
+  </g>
+
+  <text x="27" y="239.9" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="72" letter-spacing="-2" fill="#0b0b0b" filter="url(#rough)">39</text>
+  <text x="126" y="213.9" font-family="'DejaVu Sans Mono',Menlo,Consolas,'Courier New',monospace" font-size="11" letter-spacing="3.2" fill="#0b0b0b">DAYS REMAIN</text>
+  <text x="126" y="229.9" font-family="'DejaVu Sans Mono',Menlo,Consolas,'Courier New',monospace" font-size="9.5" letter-spacing="1.8" fill="#6e6e6e">UNTIL 2026-10-01</text>
+  <text x="570" y="239.9" text-anchor="end" font-family="Georgia,'Iowan Old Style','Times New Roman',serif" font-size="34" fill="#0b0b0b" filter="url(#rough)">0%</text>
+  <text x="570" y="197.9" text-anchor="end" font-family="'DejaVu Sans Mono',Menlo,Consolas,'Courier New',monospace" font-size="9.5" letter-spacing="2.6" fill="#6e6e6e">BURNED</text>
+
+  <path d="M30,263.6 L68.6,264.3 L107.1,264.6 L145.7,263.4 L184.3,264.6 L222.9,263.4 L261.4,264.1 L300,264.2 L338.6,263.2 L377.1,263.6 L415.7,263.1 L454.3,263.4 L492.9,263.7 L531.4,263.9 L570,263.3" fill="none" stroke="#0b0b0b" stroke-width="0.8" opacity="0.55" filter="url(#rough)"/>
+  <text x="30" y="280.9" font-family="'DejaVu Sans Mono',Menlo,Consolas,'Courier New',monospace" font-size="9.5" letter-spacing="2" fill="#4a4a4a">DAY 0 / 39</text>
+  <text x="570" y="280.9" text-anchor="end" font-family="'DejaVu Sans Mono',Menlo,Consolas,'Courier New',monospace" font-size="9.5" letter-spacing="2" fill="#4a4a4a">SIC TRANSIT GLORIA MUNDI</text>
+</g>
+
+<rect width="600" height="341" filter="url(#grain)" opacity="0.16" style="mix-blend-mode:multiply"/>
+</svg>
